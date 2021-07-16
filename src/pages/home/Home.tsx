@@ -1,9 +1,10 @@
 import {
+  Box,
   Breadcrumbs,
   Button,
   Container,
   Grid,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
@@ -17,22 +18,26 @@ const Home = () => {
   return (
     <>
       <Container className={classes.cardGrid} maxWidth="xl">
-        <Breadcrumbs    
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-        >
-          <Typography color="textPrimary" className={classes.link}>
-            <HomeOutlinedIcon className={classes.breadcrumb_icon} />
-            Home
-          </Typography>
-        </Breadcrumbs>
+        <Box mb={2}>
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+          >
+            <Typography color="textPrimary" className={classes.link}>
+              <HomeOutlinedIcon className={classes.breadcrumb_icon} />
+              Home
+            </Typography>
+          </Breadcrumbs>
+        </Box>
         <Typography
-          variant="h4"
+          variant="h5"
           align="center"
           color="textPrimary"
           gutterBottom
         >
-          Tech Talks
+          <Box fontWeight="fontWeightMedium">
+            Tech Talks
+          </Box>
         </Typography>
         <Typography variant="subtitle1" align="center" paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
@@ -62,12 +67,12 @@ const Home = () => {
         <div className={classes.buttons}>
           <Grid container spacing={3} justify="center">
             <Grid item>
-              <Button variant="contained" color="primary"  onClick={()=> history.push("/tech-talks")}>
+              <Button variant="contained" color="primary" onClick={() => history.push("/tech-talks")}>
                 View Upcoming Talks
               </Button>
             </Grid>
             <Grid item>
-              <Button variant="outlined" color="primary" onClick={()=> history.push("/register-talk")}>
+              <Button variant="outlined" color="primary" onClick={() => history.push("/register-talk")}>
                 Register for a Talk
               </Button>
             </Grid>

@@ -1,19 +1,17 @@
-import { Breadcrumbs, Container, Grid, Typography } from "@material-ui/core";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import TextField from "@material-ui/core/TextField";
+import { Box, Breadcrumbs, Container, Typography } from "@material-ui/core";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import RegistrationForm from "../../components/register-form/RegistrationForm";
 import { useStyles } from "../../styles";
 
 const Register = () => {
-  const history = useHistory();
   const classes = useStyles();
   return (
     <>
       <Container className={classes.cardGrid} maxWidth="xl">
+        <Box mb={2}>
         <Breadcrumbs
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
@@ -26,103 +24,19 @@ const Register = () => {
             Register Talk
           </Typography>
         </Breadcrumbs>
+        </Box>
+ 
         <Typography
-          variant="h4"
+          variant="h5"
           align="center"
           color="textPrimary"
           gutterBottom
         >
-          Register Talk
+          <Box fontWeight="fontWeightMedium">
+            Register for a Tech Talk
+          </Box>
         </Typography>
-        <Container className={classes.cardGrid} maxWidth="md">
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="firstName"
-                name="firstName"
-                label="First name"
-                fullWidth
-                autoComplete="given-name"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} >
-              <TextField
-                required
-                id="lastName"
-                name="lastName"
-                label="Last name"
-                fullWidth
-                autoComplete="family-name"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="address1"
-                name="address1"
-                label="Address line 1"
-                fullWidth
-                autoComplete="shipping address-line1"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                id="address2"
-                name="address2"
-                label="Address line 2"
-                fullWidth
-                autoComplete="shipping address-line2"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="city"
-                name="city"
-                label="City"
-                fullWidth
-                autoComplete="shipping address-level2"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="state"
-                name="state"
-                label="State/Province/Region"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="zip"
-                name="zip"
-                label="Zip / Postal code"
-                fullWidth
-                autoComplete="shipping postal-code"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="country"
-                name="country"
-                label="Country"
-                fullWidth
-                autoComplete="shipping country"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox color="secondary" name="saveAddress" value="yes" />
-                }
-                label="Use this address for payment details"
-              />
-            </Grid>
-          </Grid>
-        </Container>
+        <RegistrationForm />
       </Container>
     </>
   );

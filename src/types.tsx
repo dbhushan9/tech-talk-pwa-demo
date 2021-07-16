@@ -1,9 +1,16 @@
 export interface TechTalk {
-   id:number,
+   id?:string,
    title:string,
    description:string,
    speaker:string,
-   tags:string[],
-   date:string,
-   archived:boolean
+   tags?:string[],
+   date:number,
+   archived?:boolean
+}
+
+export interface RegistrationFormData {
+   title?:string,
+   description?:string,
+   speaker?:string,
+   date?:string,
 }
