@@ -1,64 +1,54 @@
-import { AppBar, CssBaseline, Toolbar, Typography } from "@material-ui/core";
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuIcon from '@material-ui/icons/Menu';
-import React from "react";
+import { CssBaseline, IconButton } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import CancelIcon from '@material-ui/icons/Cancel';
+import { SnackbarProvider } from 'notistack';
+import React, { useRef } from "react";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
-import AppRouter from "./components/app-router/AppRouter";
-import { useStyles } from "./styles";
+import AppRoutes from "./components/app-router/AppRoutes";
+import Header from "./components/header/Header";
+
+export const useStyles = makeStyles((theme) => ({
+  container: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(0, 2),
+    height: '91vh',
+    overflowX: 'auto',
+    paddingBottom: theme.spacing(3)
+  },
+  btn_root: {
+    color: 'white',
+  },
+}))
 
 function App() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const notistackRef = useRef<any>()
+  const onClickDismiss = (key: any) => {
+    if (notistackRef && !!notistackRef.current)
+      notistackRef.current.closeSnackbar(key);
+  }
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   return (
     <>
-      <CssBaseline>
-        <AppBar position="relative">
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="open drawer"
-              aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}
-            >
-              <MenuIcon />
-            </IconButton>
-            <img
-              alt="logo"
-              src="/icons/logo512.png"
-              height="32px"
-              className={classes.icon}
-            />
-            <Typography variant="h6">Tech Talks</Typography>
-
-          </Toolbar>
-
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
-          </Menu>
-        </AppBar>
-        <main className={classes.container}>
-          <AppRouter />
-        </main>
-      </CssBaseline>
+      <SnackbarProvider
+        ref={notistackRef}
+        maxSnack={3}
+        action={(key) => (
+          <IconButton aria-label="delete" style={{ fill: 'white' }} onClick={() => onClickDismiss(key)} color="inherit">
+            <CancelIcon />
+          </IconButton>
+        )}
+      >
+        <CssBaseline>
+          <BrowserRouter>
+            <Header />
+            <main className={classes.container}>
+              <AppRoutes />
+            </main>
+          </BrowserRouter>
+        </CssBaseline>
+      </SnackbarProvider>
     </>
   );
 }
