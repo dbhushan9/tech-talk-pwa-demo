@@ -31,7 +31,7 @@ const Header = () => {
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
-    const menuItemClicked = (route: string) => {
+    const navigateTo = (route: string) => {
         history.push(route, {})
         handleMenuClose();
     }
@@ -46,8 +46,8 @@ const Header = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={() => menuItemClicked('/register-talk')}>Register Talk</MenuItem>
-            <MenuItem onClick={() => menuItemClicked('/tech-talks')}>View All</MenuItem>
+            <MenuItem onClick={() => navigateTo('/register-talk')}>Register Talk</MenuItem>
+            <MenuItem onClick={() => navigateTo('/tech-talks')}>View All</MenuItem>
         </Menu>
     );
     return (
@@ -57,9 +57,18 @@ const Header = () => {
                     alt="logo"
                     src="/icons/logo512.png"
                     height="32px"
+                    width="32px"
                     className={classes.icon}
+                    onClick={() => navigateTo('/')}
+                    style={{ cursor: 'pointer' }}
                 />
-                <Typography variant="h6">Tech Talks</Typography>
+                <Typography
+                    variant="h6"
+                    onClick={() => navigateTo('/')}
+                    style={{ cursor: 'pointer' }}
+                >
+                    Tech Talks
+                </Typography>
                 <div className={classes.grow} />
                 <div className={classes.sectionDesktop}>
                     <IconButton
