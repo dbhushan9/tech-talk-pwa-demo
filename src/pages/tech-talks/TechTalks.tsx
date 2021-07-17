@@ -58,7 +58,6 @@ const StyledToggleButton = withStyles({
   root: {
     color: 'rgba(0, 0, 0, 0.87)',
     height: '30px',
-    // width: '100%',
     '&$selected': {
       backgroundColor: 'rgba(33, 137, 214, 0.14)',
       color: 'rgb(26, 88, 159)',
@@ -80,15 +79,14 @@ const TechTalks = () => {
   const [techTalkType, setTechTalkType] = useState<string | null>('Upcoming');
 
   const handleTechTalkType = (event: React.MouseEvent<HTMLElement>, techTalkType: string | null) => {
-    setTechTalkType(techTalkType);
+    if (techTalkType != null) {
+      setTechTalkType(techTalkType);
+    }
   };
 
 
   const getFormattedDate = (timestamp: number) => {
     const dt = new Date(timestamp);
-    //     var months = [ "JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
-    //     "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" ];
-    // const weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -137,26 +135,6 @@ const TechTalks = () => {
             {card.description}
           </Typography>
         </CardContent>
-
-        {/* <CardActions className={classes.tags}>
-          <Grid
-            container
-            direction="row"
-            justify="space-evenly"
-            alignItems="center"
-          >
-            {
-              !!card.tags && card.tags.map(tag => (
-                <Grid item>
-                  <Chip size="small" label={tag}
-                    color={randomTagColor()}
-                  />
-                </Grid>
-              ))
-            }
-          </Grid>
-
-        </CardActions> */}
         <CardActions>
           <Grid
             container
@@ -179,7 +157,6 @@ const TechTalks = () => {
               </Box>
             </Grid>
           </Grid>
-
         </CardActions>
       </Card>
     </Grid>
