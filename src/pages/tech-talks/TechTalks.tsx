@@ -70,6 +70,8 @@ const StyledToggleButton = withStyles({
   selected: {},
 })(ToggleButton);
 
+const cardImages = ['image1-v1.jpg', 'image2-v1.jpg', 'image3-v1.jpg', 'image4-v1.jpg', 'image5-v1.jpg']
+
 const TechTalks = () => {
   const classes = useStyles();
 
@@ -119,7 +121,7 @@ const TechTalks = () => {
       <Card className={classes.card}>
         <CardMedia
           className={classes.cardMedia}
-          image={`https://source.unsplash.com/weekly?1${index}`}
+          image={`/card-images/${cardImages[index % 5]}`}
           title="Image Title"
         />
         <Typography gutterBottom display="block" variant="caption" color="textSecondary" align="center" className={classes.date}>
