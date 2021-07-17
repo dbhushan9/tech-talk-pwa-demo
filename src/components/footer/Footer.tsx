@@ -1,8 +1,14 @@
 import { Typography } from "@material-ui/core";
 import { Copyright } from "@material-ui/icons";
 import React from "react";
-import { useStyles } from "../../styles";
+import { makeStyles } from '@material-ui/core/styles';
 
+export const useStyles = makeStyles((theme) => ({
+  footer:{
+    backgroundColor: theme.palette.background.paper,
+    padding:'50px 0'
+  },
+}))
 const Footer = () => {
   const classes = useStyles();
   return (

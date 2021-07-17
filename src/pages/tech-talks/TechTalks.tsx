@@ -4,7 +4,7 @@ import {
   CardActions,
   CardContent,
   CardMedia, Container,
-  Grid, Typography
+  Grid, Paper, Typography, withStyles
 } from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -41,11 +41,35 @@ const LoadingAnimation = (
   </Container>
 )
 
-// const tagColors: Exclude<PropTypes.Color, 'inherit'>[] = ['primary', 'secondary', 'default']
-// let randomTagColor = () => tagColors[Math.floor(Math.random() * tagColors.length)];
+const StyledToggleButtonGroup = withStyles((theme) => ({
+  grouped: {
+    margin: theme.spacing(0.5),
+    border: 'none',
+    '&:not(:first-child)': {
+      borderRadius: theme.shape.borderRadius,
+    },
+    '&:first-child': {
+      borderRadius: theme.shape.borderRadius,
+    },
+  },
+}))(ToggleButtonGroup);
 
-// const chipVariants: ('default' | 'outlined')[] = ['default', 'outlined']
-// const randomChipVariant = () => chipVariants[Math.floor(Math.random() * chipVariants.length)]
+const StyledToggleButton = withStyles({
+  root: {
+    color: 'rgba(0, 0, 0, 0.87)',
+    height: '30px',
+    // width: '100%',
+    '&$selected': {
+      backgroundColor: 'rgba(33, 137, 214, 0.14)',
+      color: 'rgb(26, 88, 159)',
+      '&:hover': {
+        backgroundColor: 'rgba(33, 137, 214, 0.14)',
+        color: 'rgb(26, 88, 159)',
+      },
+    },
+  },
+  selected: {},
+})(ToggleButton);
 
 const TechTalks = () => {
   const classes = useStyles();
@@ -100,7 +124,7 @@ const TechTalks = () => {
           image={`https://source.unsplash.com/weekly?1${index}`}
           title="Image Title"
         />
-        <Typography gutterBottom display="block" variant="caption" color="textSecondary" align="center" className={classes.speaker}>
+        <Typography gutterBottom display="block" variant="caption" color="textSecondary" align="center" className={classes.date}>
           {getFormattedDate(card.date)}
         </Typography>
         <CardContent className={classes.cardContent}>
@@ -109,7 +133,7 @@ const TechTalks = () => {
             {card.title}
           </Typography>
 
-          <Typography gutterBottom variant="body2" align="justify">
+          <Typography gutterBottom variant="body2" align="center">
             {card.description}
           </Typography>
         </CardContent>
@@ -133,9 +157,7 @@ const TechTalks = () => {
           </Grid>
 
         </CardActions> */}
-        <CardActions className={classes.tags2}>
-          {/* <Box mb={2}> */}
-
+        <CardActions>
           <Grid
             container
             direction="row"
@@ -143,18 +165,20 @@ const TechTalks = () => {
             alignItems="center"
           >
             <Grid item>
-              <Button size="small" color="primary" variant="outlined" endIcon={<EditIcon />}>
-                Edit
-              </Button>
+              <Box mb={2}>
+                <Button size="small" color="primary" variant="outlined" endIcon={<EditIcon />}>
+                  Edit
+                </Button>
+              </Box>
             </Grid>
             <Grid item>
-              <Button size="small" color="secondary" variant="outlined" endIcon={<DeleteIcon />}>
-                Delete
-              </Button>
+              <Box mb={2}>
+                <Button size="small" color="secondary" variant="outlined" endIcon={<DeleteIcon />}>
+                  Delete
+                </Button>
+              </Box>
             </Grid>
-
           </Grid>
-          {/* </Box> */}
 
         </CardActions>
       </Card>
@@ -180,7 +204,7 @@ const TechTalks = () => {
         </Box>
         <Container maxWidth="md">
           <Box paddingBottom={4} >
-            <Grid container spacing={0} direction="row" alignItems="center" justify="space-between" >
+            <Grid container spacing={0} direction="row" alignItems="center" className={classes.header_container} >
               <Grid item >
                 <Typography
                   variant="h5"
@@ -194,20 +218,22 @@ const TechTalks = () => {
                 </Typography>
               </Grid>
               <Grid item >
-                <ToggleButtonGroup
-                  size="small"
-                  value={techTalkType}
-                  exclusive
-                  onChange={handleTechTalkType}
-                  aria-label="text talk type"
-                >
-                  <ToggleButton value="Upcoming" aria-label="upcoming">
-                    upcoming
-                  </ToggleButton>
-                  <ToggleButton value="Archived" aria-label="archived">
-                    archived
-                  </ToggleButton>
-                </ToggleButtonGroup>
+                <Paper elevation={1} >
+                  <StyledToggleButtonGroup
+                    size="small"
+                    value={techTalkType}
+                    exclusive
+                    onChange={handleTechTalkType}
+                    aria-label="text talk type"
+                  >
+                    <StyledToggleButton value="Upcoming" aria-label="upcoming">
+                      upcoming
+                    </StyledToggleButton>
+                    <StyledToggleButton value="Archived" aria-label="archived">
+                      archived
+                    </StyledToggleButton>
+                  </StyledToggleButtonGroup>
+                </Paper>
               </Grid>
             </Grid>
           </Box>

@@ -4,16 +4,15 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { OptionsObject, useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { RegistrationFormData, TechTalk } from '../../types';
 import { RegistrationLottie } from '../animations/RegistrationLottie';
 import { CreateTechTalks } from '../services/tech-talk-service';
 
-
-
 const RegistrationAnimation = (
   <Container maxWidth="xs" >
-    <Box display={{ xs: 'none', md: 'block' }}>
+    <Box display={{ xs: 'none', sm: 'block' }}>
       <RegistrationLottie />
     </Box>
   </Container>
@@ -45,15 +44,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const initialValues: RegistrationFormData = {
+  title: "",
+  description: "",
+  speaker: "",
+  date: "2021-07-19T15:30",
+}
+
+const errorOptions: OptionsObject = {
+  persist: true,
+  variant: 'error',
+}
+
+const successOptions: OptionsObject = {
+  variant: 'success',
+  anchorOrigin: {
+    vertical: 'bottom',
+    horizontal: 'left',
+  },
+  autoHideDuration: 3000,
+}
+
 export default function RegistrationForm() {
   const classes = useStyles();
-
-  const initialValues: RegistrationFormData = {
-    title: "",
-    description: "",
-    speaker: "",
-    date: "2021-07-19T15:30",
-  }
+  const { enqueueSnackbar } = useSnackbar();
 
   const [values, setValues] = useState<RegistrationFormData>(initialValues);
   const [errors, setErrors] = useState<RegistrationFormData>({});
@@ -96,7 +110,13 @@ export default function RegistrationForm() {
     if (isValid(values) && values.title && values.description && values.date && values.speaker) {
       const data: TechTalk = { title: values.title, description: values.description, speaker: values.speaker, date: new Date(values.date).getTime() / 1000 }
       CreateTechTalks(data)
-      // push to DB
+        .then((res) => {
+          enqueueSnackbar('Tech Talk registered', successOptions)
+          resetForm()
+        })
+        .catch(err => {
+          enqueueSnackbar('Failed to register Tech Talk', errorOptions)
+        })
     }
   }
 
