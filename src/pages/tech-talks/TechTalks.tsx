@@ -6,14 +6,12 @@ import {
   CardMedia, Container,
   Grid, Paper, Typography, withStyles
 } from "@material-ui/core";
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { LoadingLottie } from "../../components/animations/LoadingLottie";
 import { SearchingLottie } from "../../components/animations/SearchingLottie";
 import { GetAllTechTalks } from "../../components/services/tech-talk-service";
@@ -74,6 +72,7 @@ const cardImages = ['image1-v1.jpg', 'image2-v1.jpg', 'image3-v1.jpg', 'image4-v
 
 const TechTalks = () => {
   const classes = useStyles();
+  const history = useHistory();
 
   const [loading, setLoading] = useState(true);
   const [upcomingTechTalks, setUpcomingTechTalks] = useState<TechTalk[]>([])
@@ -86,9 +85,13 @@ const TechTalks = () => {
     }
   };
 
+  const navigateToDetailedView = (card: TechTalk) => {
+    history.push('/detailed', { card })
+  }
 
   const getFormattedDate = (timestamp: number) => {
-    const dt = new Date(timestamp);
+    const dt = new Date(timestamp * 1000);
+    console.warn(dt, timestamp)
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -98,6 +101,8 @@ const TechTalks = () => {
 
   const getData = () => {
     return GetAllTechTalks().then((data: TechTalk[]) => {
+      //sort data by increasing order of date
+      data = data.sort((a, b) => a.date - b.date)
       setUpcomingTechTalks(data.filter(e => !e.archived));
       setArchivedTechTalks(data.filter(e => e.archived));
       setLoading(false)
@@ -117,7 +122,7 @@ const TechTalks = () => {
   }
 
   const CardViewer = (card: TechTalk, index: number) => (
-    <Grid item key={card.id} xs={12} sm={6} md={4}>
+    <Grid item key={card.id} xs={10} sm={6} md={4}>
       <Card className={classes.card}>
         <CardMedia
           className={classes.cardMedia}
@@ -146,15 +151,8 @@ const TechTalks = () => {
           >
             <Grid item>
               <Box mb={2}>
-                <Button size="small" color="primary" variant="outlined" endIcon={<EditIcon />}>
-                  Edit
-                </Button>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box mb={2}>
-                <Button size="small" color="secondary" variant="outlined" endIcon={<DeleteIcon />}>
-                  Delete
+                <Button size="small" color="primary" onClick={() => navigateToDetailedView(card)}>
+                  View
                 </Button>
               </Box>
             </Grid>
@@ -187,7 +185,6 @@ const TechTalks = () => {
               <Grid item >
                 <Typography
                   variant="h5"
-                  align="center"
                   color="textPrimary"
                   gutterBottom
                 >
@@ -217,7 +214,7 @@ const TechTalks = () => {
             </Grid>
           </Box>
           {loading ? LoadingAnimation :
-            <Grid container spacing={4}>
+            <Grid container spacing={4} justify='center'>
               {
                 getCardsToShow().length > 0 ?
                   getCardsToShow().map((card, index) => CardViewer(card, index)) : NoDataAnimation
