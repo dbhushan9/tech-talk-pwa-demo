@@ -38,9 +38,9 @@ export const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
   },
   header_container: {
-    justifyContent: "space-between",
-    [theme.breakpoints.down("sm")]: {
-      justifyContent: "center",
+    justifyContent: "center",
+    [theme.breakpoints.up("sm")]: {
+      justifyContent: "space-between",
     },
   },
 }));
