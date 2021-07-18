@@ -68,6 +68,8 @@ const StyledToggleButton = withStyles({
   selected: {},
 })(ToggleButton);
 
+const cardImages = ['image1-v1.jpg', 'image2-v1.jpg', 'image3-v1.jpg', 'image4-v1.jpg', 'image5-v1.jpg', 'image6-v1.jpg', 'image7-v1.jpg', 'image8-v1.jpg']
+
 const TechTalks = () => {
   const classes = useStyles();
   const history = useHistory();
@@ -89,7 +91,6 @@ const TechTalks = () => {
 
   const getFormattedDate = (timestamp: number) => {
     const dt = new Date(timestamp * 1000);
-    console.warn(dt, timestamp)
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -124,7 +125,7 @@ const TechTalks = () => {
       <Card className={classes.card}>
         <CardMedia
           className={classes.cardMedia}
-          image={`https://source.unsplash.com/weekly?1${index}`}
+          image={`/card-images/${cardImages[index % cardImages.length]}`}
           title="Image Title"
         />
         <Typography gutterBottom display="block" variant="caption" color="textSecondary" align="center" className={classes.date}>
