@@ -10,7 +10,7 @@ interface CardDetailedrops {
 }
 
 const getFormattedDate = (timestamp: number) => {
-    const dt = new Date(timestamp);
+    const dt = new Date(timestamp * 1000);
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];

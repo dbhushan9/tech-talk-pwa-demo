@@ -7,7 +7,7 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { Link, useLocation } from "react-router-dom";
 import { useStyles } from "../../styles";
 import { TechTalk } from "../../types";
-import CardDetailed from "../blog/CardDetailed";
+import CardDetailed from "../../components/detailed-card/CardDetailed";
 
 
 type DetailedState = {
@@ -17,8 +17,17 @@ type DetailedState = {
 const Detailed = () => {
     const classes = useStyles();
     const location = useLocation();
-    console.warn((location.state as DetailedState).card)
-    const techTalk: TechTalk = (location.state as DetailedState).card
+    let techTalk: TechTalk;
+    if (location && location.state) {
+        techTalk = (location.state as DetailedState).card
+    } else {
+        techTalk = {
+            title: 'Title',
+            description: 'Talk Description',
+            speaker: 'Speaker Name',
+            date: 123456
+        }
+    }
     return (
         <>
             <Container className={classes.cardGrid} maxWidth="xl">

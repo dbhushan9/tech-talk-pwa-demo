@@ -88,7 +88,8 @@ const TechTalks = () => {
   }
 
   const getFormattedDate = (timestamp: number) => {
-    const dt = new Date(timestamp);
+    const dt = new Date(timestamp * 1000);
+    console.warn(dt, timestamp)
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -98,6 +99,8 @@ const TechTalks = () => {
 
   const getData = () => {
     return GetAllTechTalks().then((data: TechTalk[]) => {
+      //sort data by increasing order of date
+      data = data.sort((a, b) => a.date - b.date)
       setUpcomingTechTalks(data.filter(e => !e.archived));
       setArchivedTechTalks(data.filter(e => e.archived));
       setLoading(false)
@@ -180,7 +183,6 @@ const TechTalks = () => {
               <Grid item >
                 <Typography
                   variant="h5"
-                  align="center"
                   color="textPrimary"
                   gutterBottom
                 >
