@@ -6,14 +6,12 @@ import {
   CardMedia, Container,
   Grid, Paper, Typography, withStyles
 } from "@material-ui/core";
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { LoadingLottie } from "../../components/animations/LoadingLottie";
 import { SearchingLottie } from "../../components/animations/SearchingLottie";
 import { GetAllTechTalks } from "../../components/services/tech-talk-service";
@@ -72,6 +70,7 @@ const StyledToggleButton = withStyles({
 
 const TechTalks = () => {
   const classes = useStyles();
+  const history = useHistory();
 
   const [loading, setLoading] = useState(true);
   const [upcomingTechTalks, setUpcomingTechTalks] = useState<TechTalk[]>([])
@@ -84,6 +83,9 @@ const TechTalks = () => {
     }
   };
 
+  const navigateToDetailedView = (card: TechTalk) => {
+    history.push('/detailed', { card })
+  }
 
   const getFormattedDate = (timestamp: number) => {
     const dt = new Date(timestamp);
@@ -115,7 +117,7 @@ const TechTalks = () => {
   }
 
   const CardViewer = (card: TechTalk, index: number) => (
-    <Grid item key={card.id} xs={12} sm={6} md={4}>
+    <Grid item key={card.id} xs={10} sm={6} md={4}>
       <Card className={classes.card}>
         <CardMedia
           className={classes.cardMedia}
@@ -144,15 +146,8 @@ const TechTalks = () => {
           >
             <Grid item>
               <Box mb={2}>
-                <Button size="small" color="primary" variant="outlined" endIcon={<EditIcon />}>
-                  Edit
-                </Button>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box mb={2}>
-                <Button size="small" color="secondary" variant="outlined" endIcon={<DeleteIcon />}>
-                  Delete
+                <Button size="small" color="primary" onClick={() => navigateToDetailedView(card)}>
+                  View
                 </Button>
               </Box>
             </Grid>
@@ -215,7 +210,7 @@ const TechTalks = () => {
             </Grid>
           </Box>
           {loading ? LoadingAnimation :
-            <Grid container spacing={4}>
+            <Grid container spacing={4} justify='center'>
               {
                 getCardsToShow().length > 0 ?
                   getCardsToShow().map((card, index) => CardViewer(card, index)) : NoDataAnimation
