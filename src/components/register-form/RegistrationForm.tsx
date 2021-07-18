@@ -48,7 +48,7 @@ const initialValues: RegistrationFormData = {
   title: "",
   description: "",
   speaker: "",
-  date: "2021-07-19T15:30",
+  date: "2021-09-06T15:30",
 }
 
 const errorOptions: OptionsObject = {

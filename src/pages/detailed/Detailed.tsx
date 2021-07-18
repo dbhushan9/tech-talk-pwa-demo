@@ -1,6 +1,6 @@
 import {
     Box,
-    Breadcrumbs, Container, Typography
+    Breadcrumbs, Container, Grid, Typography
 } from "@material-ui/core";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
@@ -48,9 +48,12 @@ const Detailed = () => {
                         </Typography>
                     </Breadcrumbs>
                 </Box>
-                <Container className={classes.cardGrid} maxWidth="lg">
-                    <CardDetailed talk={techTalk} />
-                </Container>
+                <Box mb={5}></Box>
+                <Grid container justify='center'>
+                    <Grid item sm={10}>
+                        <CardDetailed talk={techTalk} />
+                    </Grid>
+                </Grid>
             </Container>
         </>
     );
