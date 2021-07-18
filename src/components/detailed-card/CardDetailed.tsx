@@ -74,7 +74,7 @@ export default function CardDetailed(props: CardDetailedrops) {
                         </Box>
                         <Box pb={5}></Box>
                         <Typography variant="body1" color="inherit" style={{ fontSize: '19px' }} gutterBottom>
-                            {talk.description}
+                            Monetization social proof pitch mass market focus lean startup A/B testing twitter advisor. Hackathon investor return on investment gen-z paradigm shift success incubator responsive web design ownership. Graphical user interface conversion iPhone early adopters innovator deployment network effects assets ramen series A financing alpha release freemium iteration. User experience social proof pitch backing stock termsheet partnership conversion direct mailing business model canvas growth hacking. Conversion buyer branding termsheet beta. Scrum project advisor investor pivot paradigm shift.
                         </Typography>
                     </Box>
                 </Grid>
