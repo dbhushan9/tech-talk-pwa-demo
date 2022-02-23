@@ -9,6 +9,7 @@ import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { isLoggedIn, logout } from "../../utils/utils";
 
 
 export const useStyles = makeStyles((theme) => ({
@@ -53,7 +54,14 @@ const Header = () => {
             setPwaPrompt(undefined)
         }
     };
+
+    let loggedIn =  sessionStorage.getItem("loggedIn") === "true"
+    console.warn("LoggedIN: ",loggedIn)
+
+    
+
     const menuId = "menuId"
+
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
@@ -66,8 +74,13 @@ const Header = () => {
         >
             <MenuItem onClick={() => navigateTo('/register-talk')}>Register Talk</MenuItem>
             <MenuItem onClick={() => navigateTo('/tech-talks')}>View All</MenuItem>
+            <MenuItem onClick={() => { logout(); navigateTo('/login') }}>Logout</MenuItem>
         </Menu>
     );
+
+
+
+
 
     useEffect(() => {
         window.addEventListener('beforeinstallprompt', (event) => {
@@ -82,10 +95,15 @@ const Header = () => {
             console.log(`'beforeinstallprompt' event was fired.`);
         });
         return () => { }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     console.warn("PWA Install prompt", pwaPrompt)
+
+    useEffect(() => {
+        console.warn("User loggedIn changed: ",loggedIn);
+        
+    }, [loggedIn])
 
     return (
         <AppBar position="relative">
@@ -121,7 +139,7 @@ const Header = () => {
                             </IconButton>
                         </Tooltip>
                     }
-                    <IconButton
+                    {loggedIn &&<IconButton
                         edge="end"
                         aria-label="menu"
                         aria-controls={menuId}
@@ -130,10 +148,10 @@ const Header = () => {
                         color="inherit"
                     >
                         <MenuIcon />
-                    </IconButton>
+                    </IconButton>}
                 </div>
             </Toolbar>
-            {renderMenu}
+            {loggedIn && renderMenu}
         </AppBar>
     )
 }
